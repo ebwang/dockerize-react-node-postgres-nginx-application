@@ -1,68 +1,26 @@
-version: '3'
-
-services: 
+version: '3.8'
+services:
+  db:
+    image: postgres:13.3
+    restart: always
+    environment:
+      POSTGRES_PASSWORD: 615243
+    volumes:
+      - db-data:/var/lib/postgresql/data
 
   backend:
-    build: 
-      context: node
-    container_name: backend
-    working_dir: /usr/src/app
-    networks: 
-      - node-network
-    volumes: 
-      - ./node:/usr/src/app
-      - /usr/src/app/node_modules
-    tty: true
-    ports: 
-      - "3000:3000"
-    command: npm run start
+    build: ./backend
+    ports:
+      - 3000:3000
     depends_on:
-       - db
+      - db
 
   frontend:
-    build: 
-      context: react
-    container_name: frontend
-    working_dir: /usr/src/app
-    networks: 
-      - node-network
-    volumes: 
-      - ./react:/usr/src/app
-      - /usr/src/app/node_modules
-    tty: true
-    ports: 
-      - "5173:5173"
-    command: npm run dev
-
-  db:
-    image: postgres
-    container_name: db
-    restart: always
-    tty: true
-    volumes:
-      - ./data:/var/lib/postgresql/data
-    environment: 
-      - POSTGRES_PASSWORD=1234
-    ports: 
-      - "5432:5432"
-    networks: 
-      - node-network
-
-  nginx:
-    build: 
-      context: nginx
-    container_name: nginx
-    restart: always
-    tty: true
-    ports: 
-      - "8000:80"
-    networks: 
-      - node-network
+    build: ./frontend
+    ports:
+      - 8080:80
     depends_on:
-       - backend
-       - frontend
+      - backend
 
-  
-networks: 
-  node-network:
-    driver: bridge    
+volumes:
+  db-data:
