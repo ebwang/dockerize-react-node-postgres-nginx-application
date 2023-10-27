@@ -1,12 +1,11 @@
 import axios from 'axios';
-import faker from 'faker';
-
+import { faker } from '@faker-js/faker';
 
 const postData = async () => {
     const user = {
-        name: faker.name.findName(),
+        name: faker.person.fullName(),
         email: faker.internet.email(),
-        age: faker.random.number({ min: 18, max: 99 }),
+        age: faker.number.int({ min: 18, max: 99 }),
     };
 
     try {
