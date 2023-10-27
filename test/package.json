@@ -1,0 +1,14 @@
+{
+  "name": "backend",
+  "version": "1.0.0",
+  "description": "Test",
+  "main": "faker_test.js",
+  "scripts": {
+      "start": "node faker_test.js"
+  },
+  "dependencies": {
+    "axios": "^1.6.0",
+    "faker": "^6.6.6"
+  },
+  "type": "module"
+}
